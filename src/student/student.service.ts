@@ -11,8 +11,11 @@ export class StudentService {
         @InjectRepository(Student) private studentRepository: Repository<Student>
     ) { }
 
+    async getStudents(): Promise<Student[]> {
+        return this.studentRepository.find();
+    }
+
     async createStudent(createStudentInput: CreateStudentInput): Promise<Student> {
-        console.log("createStudent", createStudentInput);
         const { firstName, lastName } = createStudentInput;
         const student = this.studentRepository.create({
             id: uuid(),
