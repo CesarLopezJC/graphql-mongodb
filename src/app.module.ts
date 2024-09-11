@@ -6,17 +6,28 @@ import { LessonModule } from './lesson/lesson.module';
 import { Lesson } from './lesson/lesson.entity';
 import { StudentModule } from './student/student.module';
 import { Student } from './student/student.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url: 'mongodb://localhost/school',
-      synchronize: true,
-      // useUnifiedTopology: true,
-      entities: [
-        Lesson,
-        Student,
-      ]
+    ConfigModule.forRoot({
+      envFilePath: [`.env`], //define enviroment variables 
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          type: 'mongodb',
+          url: configService.get('MONGODB_CONNECTION'),
+          synchronize: true,
+          entities: [
+            Lesson,
+            Student,
+          ]
+        }
+      }
+
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       autoSchemaFile: true,

@@ -35,13 +35,10 @@ export class StudentService {
     }
 
     async getManyStudents(studentIds: string[]): Promise<Student[]> {
-        console.log('studentIds', studentIds);
         const lessonStudentsDB = await this.studentRepository.find();
 
         const lessonStudents = lessonStudentsDB.filter(student => studentIds.includes(student.id))
 
-        console.log('lessonStudents', lessonStudents);
         return lessonStudents;
-        // return this.studentRepository.createQueryBuilder().where("id:")
     }
 }
