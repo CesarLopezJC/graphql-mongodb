@@ -13,6 +13,7 @@ async function bootstrap() {
       'Accept',
       'Authorization',
       'Content-Type',
+      'x-apollo-operation-name',
       'X-Requested-With',
       'apollo-require-preflight',
     ],
