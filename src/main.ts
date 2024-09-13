@@ -13,7 +13,6 @@ async function bootstrap() {
       'Accept',
       'Authorization',
       'Content-Type',
-      'x-apollo-operation-graphql',
       'X-Requested-With',
       'apollo-require-preflight',
     ],
@@ -23,7 +22,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   await app.listen(3000);
-
 }
 bootstrap();
 
